@@ -15,9 +15,11 @@ locale: de
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
-# Deutsche Beschriftungen für die Buttons
-site_url: https://www.wellnessplace.ch
-display_url: https://www.wellnessplace.ch
+# "Live ansehen"-Links im CMS.
+# TEMPORÄR auf die Netlify-Adresse, damit Claudia beim Testen schon die NEUE
+# Seite sieht. Nach dem Domain-Umzug zurück auf https://www.wellnessplace.ch stellen.
+site_url: https://wellnessplace.netlify.app
+display_url: https://wellnessplace.netlify.app
 
 collections:
   - name: "inhalte"
