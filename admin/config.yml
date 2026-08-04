@@ -1,0 +1,74 @@
+# ── Decap CMS Konfiguration ──────────────────────────────────────
+# Speichert Änderungen als Dateien im Git-Repo; Netlify baut die Seite neu.
+backend:
+  name: git-gateway
+  branch: main
+
+# Lokales Testen: mit `npx decap-server` und dieser Zeile arbeitet das CMS
+# ohne Login direkt auf den lokalen Dateien. Für die Live-Version ignoriert.
+local_backend: true
+
+# Sprache der Oberfläche
+locale: de
+
+# Bilder werden hierhin hochgeladen
+media_folder: "assets/img"
+public_folder: "/assets/img"
+
+# Deutsche Beschriftungen für die Buttons
+site_url: https://www.wellnessplace.ch
+display_url: https://www.wellnessplace.ch
+
+collections:
+  - name: "inhalte"
+    label: "Website-Inhalte"
+    description: "Hier kannst du die wichtigsten Angaben deiner Website selbst ändern."
+    editor:
+      preview: false
+    files:
+      - name: "kontakt"
+        label: "Kontakt & Adresse"
+        file: "content/kontakt.json"
+        description: "Telefon, E-Mail und Adresse – erscheinen auf allen Seiten."
+        fields:
+          - { name: "telefon_anzeige", label: "Telefon (wie angezeigt)", widget: "string", hint: "z. B. 079 544 49 39" }
+          - { name: "telefon_intl", label: "Telefon für Anruf-Links", widget: "string", hint: "internationale Schreibweise, z. B. +41795444939" }
+          - { name: "whatsapp_nummer", label: "WhatsApp-Nummer", widget: "string", hint: "nur Ziffern mit Landesvorwahl, z. B. 41795444939" }
+          - { name: "email", label: "E-Mail", widget: "string" }
+          - { name: "strasse", label: "Strasse & Nummer", widget: "string" }
+          - { name: "plz_ort", label: "PLZ & Ort", widget: "string" }
+
+      - name: "zeiten"
+        label: "Öffnungszeiten"
+        file: "content/zeiten.json"
+        description: "Deine Erreichbarkeit / Öffnungszeiten."
+        fields:
+          - name: "zeiten"
+            label: "Zeiten"
+            label_singular: "Zeile"
+            widget: "list"
+            fields:
+              - { name: "tag", label: "Tag / Bezeichnung", widget: "string", hint: "z. B. Montag – Freitag" }
+              - { name: "zeit", label: "Zeit", widget: "string", hint: "z. B. 09:00 – 18:00 oder nach Vereinbarung" }
+          - { name: "hinweis", label: "Hinweis (optional)", widget: "string", required: false }
+
+      - name: "preise"
+        label: "Preise"
+        file: "content/preise.json"
+        description: "Die Preistabelle auf der Seite «Angebote & Preise»."
+        fields:
+          - name: "tarife"
+            label: "Tarife"
+            label_singular: "Tarif"
+            widget: "list"
+            fields:
+              - { name: "dauer", label: "Dauer", widget: "string", hint: "z. B. 60 Min" }
+              - { name: "preis", label: "Preis in CHF", widget: "string", hint: "nur die Zahl, z. B. 100" }
+
+      - name: "bilder"
+        label: "Bilder"
+        file: "content/bilder.json"
+        description: "Portrait und Raumbild austauschen."
+        fields:
+          - { name: "portrait", label: "Portrait (Claudia)", widget: "image" }
+          - { name: "raum", label: "Massageraum", widget: "image" }

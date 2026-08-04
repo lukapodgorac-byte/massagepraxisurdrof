@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="210" viewBox="0 0 320 210">
+  <g fill="none" stroke="#7f9070" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Kissen / Kopfrolle oben auf der Rückenlehne -->
+    <rect x="52" y="40" width="46" height="22" rx="11" fill="#9fae8f" stroke="none" transform="rotate(-38 75 51)"/>
+    <!-- Liegefläche, obere Kante: Rückenlehne hoch links, dann Sitz nach rechts -->
+    <path d="M74 66 L150 120 L286 140"/>
+    <!-- Liegefläche, untere Kante (gibt der Fläche Dicke) -->
+    <path d="M88 74 L150 132 L284 152"/>
+    <!-- Kappen vorne und hinten -->
+    <path d="M74 66 L88 74"/>
+    <path d="M286 140 L284 152"/>
+    <!-- vorderes Bein + Fuss -->
+    <path d="M268 148 L272 186 M258 186 L286 186"/>
+    <!-- hinteres Bein am Knick + Fuss -->
+    <path d="M150 130 L150 186 M138 186 L162 186"/>
+    <!-- Querstrebe zwischen den Beinen -->
+    <path d="M152 162 L270 166"/>
+  </g>
+  <!-- feine Latten (Rückenlehne + Sitz), dünner und zarter -->
+  <g fill="none" stroke="#7f9070" stroke-width="2.4" stroke-linecap="round" opacity=".7">
+    <path d="M92 76 L100 68 M108 84 L116 76 M124 92 L132 84"/>
+    <path d="M176 124 L180 133 M206 127 L210 136 M236 130 L240 139 M262 133 L266 142"/>
+  </g>
+</svg>

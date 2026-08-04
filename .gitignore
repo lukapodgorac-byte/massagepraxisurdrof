@@ -1,0 +1,18 @@
+# Betriebssystem / Editor
+.DS_Store
+Thumbs.db
+*.orig
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Lokale Quell-/Arbeitsdateien – werden von der Website nicht gebraucht
+/bildclaudia.jpg
+/bildraum.jpg
+/homepage.png
+/logo.avif
+/lol1.avif
+/massage1.avif
+/massage2.avif
+/massageraum.avif

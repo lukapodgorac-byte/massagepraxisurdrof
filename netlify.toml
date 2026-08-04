@@ -1,0 +1,9 @@
+# Statische Seite ohne Build-Schritt – Netlify serviert einfach die Wurzel.
+[build]
+  publish = "."
+
+# Decap CMS Admin sauber ausliefern
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"

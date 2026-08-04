@@ -1,0 +1,9 @@
+{
+  "tarife": [
+    { "dauer": "30 Min", "preis": "60" },
+    { "dauer": "45 Min", "preis": "80" },
+    { "dauer": "60 Min", "preis": "100" },
+    { "dauer": "75 Min", "preis": "120" },
+    { "dauer": "90 Min", "preis": "140" }
+  ]
+}

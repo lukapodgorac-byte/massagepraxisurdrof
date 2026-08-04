@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /impressum.html
+Disallow: /datenschutz.html
+Disallow: /en/impressum.html
+Disallow: /en/datenschutz.html
+
+Sitemap: https://www.wellnessplace.ch/sitemap.xml

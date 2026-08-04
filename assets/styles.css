@@ -1,0 +1,1024 @@
+/* ═══════════════════════════════════════════════════════════════
+   MASSAGE-PRAXIS URDORF · GEMEINSAMES STYLESHEET
+   ───────────────────────────────────────────────────────────────
+   FARBEN ÄNDERN: alle Farben stehen direkt hier unten im Block
+   ":root" und sind beschriftet. Eine Farbe hier ändern genügt,
+   sie gilt danach auf allen Seiten.
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --pinie:        #59684c;  /* weiches Olivgrün: Über-mich-Block, Buttons, CTA, Footer */
+  --pinie-tief:   #48553d;  /* dunkler: Footer-Grund, Hover */
+  --salbei:       #7f9070;  /* mittleres Salbei: Linien-Akzente, Blätter */
+  --salbei-hell:  #e9ede0;  /* blasses Salbei: Hero-Band, Icon-Badges */
+  --salbei-mittel:#dde3d0;  /* etwas tieferes Salbei: ruhige Blöcke */
+  --papier:       #f7f6ef;  /* Seitenhintergrund: warmes Off-White */
+  --karte:        #fffdf7;  /* warmes Weiss für Cards */
+  --bone:         #f4f2e8;  /* helle Schrift auf Grün */
+  --gold:         #8a7c40;  /* gedämpftes Gold aus dem Logo: Sterne, Dauer */
+  --tinte:        #2a3324;  /* Textfarbe */
+  --tinte-sanft:  #5f6a54;  /* gedämpfter Text */
+  --linie:        #dcdfd0;  /* Haarlinien */
+  --linie-dunkel: rgba(244,242,232,.22); /* Haarlinien auf Grün */
+
+  --serif: "Marcellus", Georgia, serif;
+  --sans:  "Mulish", "Segoe UI", sans-serif;
+  --kurve: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+/* Fokus: kein Kasten beim Maus-Klick, aber ein dezenter Rahmen für
+   Tastatur-Nutzer (Barrierefreiheit). Behebt den Rahmen, der nach dem
+   Klick aufs Logo im Sticky-Header sichtbar blieb. */
+:focus{ outline: none; }
+:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+/* Gesamte Website etwas kompakter darstellen (wie bei 90 % Zoom).
+   Ab Tablet/Desktop 0.9, auf dem Handy noch etwas kompakter – gleiche
+   Gestaltung, nur kleiner. */
+@media (min-width: 760px){ :root{ zoom: 0.9; } }
+@media (max-width: 759px){ :root{ zoom: 0.86; } }
+
+body{
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.68;
+  color: var(--tinte);
+  background: var(--papier);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img{ max-width:100%; display:block; }
+section{ scroll-margin-top: 5.5rem; }
+
+/* ── Olivenzweig-Deko ───────────────────────────────────────────
+   Regel: Fixe Rand-Zweige NUR auf Seiten OHNE eigene Deko in den
+   Abschnitten. Die Startseite (body.hat-deko) hat Zweige direkt in
+   den Abschnitten (.deko-blatt) und blendet die fixen darum aus. */
+@media (min-width: 1180px){
+  body:not(.hat-deko)::before,
+  body:not(.hat-deko)::after{
+    content:"";
+    position: fixed;
+    z-index: 1;
+    pointer-events: none;
+    width: 230px; height: 560px;
+    background: url("img/blatt-zweig.svg") no-repeat top center / contain;
+    opacity: .5;
+  }
+  /* linker Zweig: Original. rechter Zweig: horizontal gespiegelt,
+     hängt ebenfalls von oben herab (nicht auf den Kopf gestellt) */
+  body:not(.hat-deko)::before{ top: -20px; left: -95px; transform: rotate(3deg); transform-origin: top center; }
+  body:not(.hat-deko)::after{ top: -20px; right: -95px; transform: scaleX(-1) rotate(3deg); transform-origin: top center; }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 1180px){
+  body:not(.hat-deko)::before{ animation: wiegen-links 11s ease-in-out infinite; }
+  body:not(.hat-deko)::after{ animation: wiegen-rechts 13s ease-in-out infinite; }
+}
+@keyframes wiegen-links{
+  0%,100%{ transform: rotate(3deg); }
+  50%{ transform: rotate(-1deg); }
+}
+@keyframes wiegen-rechts{
+  0%,100%{ transform: scaleX(-1) rotate(3deg); }
+  50%{ transform: scaleX(-1) rotate(-1deg); }
+}
+
+/* In-Abschnitt-Zweige (Startseite) */
+.deko-blatt{ position:absolute; z-index:1; pointer-events:none; width:220px; opacity:.55; }
+@media (max-width: 1023px){ .deko-blatt{ display:none; } }
+.deko-hero{ top:-10px; left:-70px; width:235px; }
+.deko-ueber{ top:70px; left:-60px; width:215px; }
+.deko-stimmen{ top:60px; right:-55px; width:235px; transform: scaleX(-1); }
+
+/* Seitenbreite */
+.rahmen{
+  width:100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 720px){ .rahmen{ padding-inline: 3rem; } }
+
+/* ── Typografie ─────────────────────────────────────────────── */
+h1, h2, h3{
+  font-family: var(--serif);
+  font-weight: 400; /* Marcellus gibt es nur in einer Stärke */
+  line-height: 1.12;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+h1{ font-size: clamp(2.4rem, 6vw, 4.2rem); }
+h2{ font-size: clamp(1.9rem, 4vw, 2.9rem); }
+h3{ font-size: clamp(1.25rem, 2vw, 1.5rem); }
+p{ max-width: 62ch; }
+
+/* Ehemalige Kursiv-Betonung: bewusst neutral, Titel bleiben ruhig */
+.betont{ font-style: normal; font-weight: inherit; }
+
+.gedaempft{ color: var(--tinte-sanft); }
+
+/* ── Buttons: rechteckig, ruhig, spürbar ────────────────────── */
+.knopf{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:.55rem;
+  font-family: var(--sans);
+  font-size: .93rem; font-weight: 600;
+  letter-spacing: .01em;
+  text-decoration:none;
+  padding: .95rem 1.9rem;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: transform 160ms var(--kurve),
+              background-color 220ms var(--kurve),
+              color 220ms var(--kurve),
+              border-color 220ms var(--kurve);
+}
+.knopf:active{ transform: scale(0.98); }
+.knopf svg{ width: 1.05em; height: 1.05em; flex:none; }
+
+/* dunkelgrün gefüllt (auf hellem Grund) */
+.knopf-voll{ background: var(--pinie); color: var(--bone); border-color: var(--pinie); }
+/* umrandet (auf hellem Grund) */
+.knopf-linie{ background:transparent; color: var(--pinie); border-color: var(--salbei); }
+/* hell gefüllt (auf dunklem Grund) */
+.knopf-hell{ background: var(--bone); color: var(--pinie); border-color: var(--bone); }
+/* hell umrandet (auf dunklem Grund) */
+.knopf-hell-linie{ background:transparent; color: var(--bone); border-color: var(--linie-dunkel); }
+
+@media (hover:hover) and (pointer:fine){
+  .knopf-voll:hover{ background: var(--pinie-tief); }
+  .knopf-linie:hover{ background: var(--salbei-hell); }
+  .knopf-hell:hover{ background: #ffffff; }
+  .knopf-hell-linie:hover{ border-color: var(--bone); }
+}
+
+/* ── Kopfzeile / Navigation ─────────────────────────────────────
+   Halbtransparent mit Blur. Über hellen Abschnitten dunkler Text,
+   über grünen Abschnitten heller Text (Klasse .auf-dunkel, per JS). */
+.kopf{
+  position: sticky; top:0; z-index: 40;
+  background: color-mix(in srgb, var(--papier) 76%, transparent);
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  border-bottom: 1px solid var(--linie);
+  transition: background-color .45s var(--kurve), border-color .45s var(--kurve);
+}
+.kopf.auf-dunkel{
+  background: color-mix(in srgb, var(--pinie) 68%, transparent);
+  border-bottom-color: rgba(244,242,232,.16);
+}
+/* Startseite: die Kopfzeile hat dieselbe Farbe wie das Hero-Band darunter
+   und verschmilzt nahtlos damit (kein sichtbarer Streifen). */
+body.hat-deko .kopf:not(.auf-dunkel){
+  background-color: #f7f6f0;
+  /* dieselbe feine Papierkörnung wie im Hero, damit Kopf & Hero exakt
+     denselben Ton haben und nahtlos ineinander übergehen */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+  backdrop-filter:none; -webkit-backdrop-filter:none;
+  border-bottom-color: transparent;
+}
+.kopf-innen{
+  display:flex; align-items:center; justify-content:space-between;
+  height: 4.5rem;
+}
+.marke{
+  display:flex; align-items:center; gap:.75rem;
+  text-decoration:none; color: var(--tinte); line-height:1.12;
+  transition: color .45s var(--kurve);
+}
+.kopf.auf-dunkel .marke{ color: var(--bone); }
+.marke img{ width: 2.35rem; height:auto; }
+.marke strong{ font-family: var(--serif); font-weight:400; font-size:1.18rem; display:block; }
+.marke small{ font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color: var(--tinte-sanft); transition: color .45s var(--kurve); }
+.kopf.auf-dunkel .marke small{ color: rgba(244,242,232,.62); }
+
+.hauptnav{ display:none; align-items:center; gap: 1.5rem; list-style:none; }
+.hauptnav a:not(.knopf){
+  text-decoration:none; font-size:.93rem; font-weight:500;
+  color: var(--tinte-sanft);
+  padding-block:.35rem;
+  border-bottom: 1px solid transparent;
+  transition: color .45s var(--kurve), border-color 200ms ease;
+}
+.kopf.auf-dunkel .hauptnav a:not(.knopf){ color: rgba(244,242,232,.8); }
+.hauptnav a:not(.knopf):hover{ color: var(--tinte); }
+.kopf.auf-dunkel .hauptnav a:not(.knopf):hover{ color: #ffffff; }
+/* aktive Seite: goldene Linie (gilt nicht für den Termin-Knopf) */
+.hauptnav a.aktiv:not(.knopf){ color: var(--tinte); border-bottom-color: var(--gold); }
+.kopf.auf-dunkel .hauptnav a.aktiv:not(.knopf){ color: var(--bone); border-bottom-color: var(--bone); }
+.hauptnav .knopf{ padding:.65rem 1.35rem; font-size:.87rem; }
+.kopf.auf-dunkel .hauptnav .knopf-voll{ background: var(--bone); color: var(--pinie); border-color: var(--bone); }
+
+/* Hamburger */
+.nav-schalter{
+  display:inline-flex; flex-direction:column; gap:5px;
+  background:none; border:none; padding:.6rem; cursor:pointer;
+  z-index: 60; position: relative;
+}
+.nav-schalter span{
+  width:24px; height:2px; background: var(--tinte);
+  transition: transform 300ms var(--kurve), opacity 200ms ease, background-color 200ms ease;
+}
+.kopf.auf-dunkel .nav-schalter span{ background: var(--bone); }
+.nav-schalter[aria-expanded="true"] span{ background: var(--bone); }
+.nav-schalter[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-schalter[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+.nav-schalter[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobiles Vollbild-Menü */
+.mobilmenu{
+  position: fixed; inset:0; z-index: 50;
+  background: var(--pinie);
+  display:flex; flex-direction:column; justify-content:flex-start;
+  /* oben Platz für die Kopfzeile lassen, damit der erste Punkt nicht
+     verdeckt wird; bei viel Inhalt darf das Menü scrollen */
+  padding: 5.75rem 1.75rem 2.5rem;
+  overflow-y: auto;
+  visibility: hidden; opacity:0;
+  transition: opacity 350ms var(--kurve), visibility 0s linear 350ms;
+}
+.mobilmenu.offen{ visibility:visible; opacity:1; transition-delay: 0s; }
+.mobilmenu ul{ list-style:none; display:grid; gap: .4rem; }
+.mobilmenu a{
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 8vw, 2.6rem);
+  color: var(--bone); text-decoration:none;
+  display:inline-block; padding-block:.35rem;
+}
+.mobilmenu a.aktiv{ color: #cfc48a; } /* helles Gold, lesbar auf Grün */
+.mobilmenu .menu-kontakt{
+  margin-top: 2.5rem; padding-top: 1.75rem;
+  border-top: 1px solid var(--linie-dunkel);
+  font-size:.92rem; color: rgba(243,241,230,.7);
+  display:grid; gap:.3rem;
+}
+.mobilmenu .menu-kontakt a{ font-family: var(--sans); font-size:.95rem; color: var(--bone); padding:0; }
+/* Menüpunkte gleiten gestaffelt herein */
+@media (prefers-reduced-motion: no-preference){
+  .mobilmenu li{ transform: translateY(22px); opacity:0; transition: transform 450ms var(--kurve), opacity 400ms ease; }
+  .mobilmenu.offen li{ transform:none; opacity:1; }
+  .mobilmenu.offen li:nth-child(2){ transition-delay: 50ms; }
+  .mobilmenu.offen li:nth-child(3){ transition-delay: 100ms; }
+  .mobilmenu.offen li:nth-child(4){ transition-delay: 150ms; }
+  .mobilmenu.offen li:nth-child(5){ transition-delay: 200ms; }
+  .mobilmenu.offen li:nth-child(6){ transition-delay: 250ms; }
+}
+body.menu-offen{ overflow:hidden; }
+/* Bei offenem Menü liegt die Kopfzeile (Logo + Schliess-Kreuz) über dem Overlay.
+   Höhere Spezifität, damit sie auch die Startseiten-Regel (hat-deko) schlägt und
+   das grüne Overlay durchscheinen lässt statt beige zu bleiben. */
+body.menu-offen .kopf,
+body.menu-offen.hat-deko .kopf:not(.auf-dunkel){
+  z-index: 60; background: transparent; background-image:none; border-bottom-color: transparent;
+}
+body.menu-offen .marke{ color: var(--bone); }
+body.menu-offen .marke small{ color: rgba(243,241,230,.6); }
+
+/* ── Sprachumschalter DE / EN ───────────────────────────────── */
+.hauptnav .sprachwahl{
+  display:flex; align-items:center; gap:.3rem;
+  font-size:.72rem; font-weight:600; letter-spacing:.05em;
+}
+.hauptnav .sprachwahl a{
+  color: var(--tinte-sanft); text-decoration:none;
+  padding:.2rem .1rem; border-bottom:1px solid transparent;
+  transition: color .45s var(--kurve);
+}
+.hauptnav .sprachwahl a:hover{ color: var(--tinte); }
+.hauptnav .sprachwahl a.aktiv{ color: var(--tinte); border-bottom-color: transparent; }
+.hauptnav .sprachwahl span{ color: var(--linie); font-weight:400; }
+.kopf.auf-dunkel .hauptnav .sprachwahl a{ color: rgba(244,242,232,.7); }
+.kopf.auf-dunkel .hauptnav .sprachwahl a.aktiv,
+.kopf.auf-dunkel .hauptnav .sprachwahl a:hover{ color: var(--bone); }
+.kopf.auf-dunkel .hauptnav .sprachwahl span{ color: rgba(244,242,232,.32); }
+
+.mobilmenu .sprachwahl-mobil{
+  margin-top: 2rem; display:flex; gap:1.5rem; align-items:center;
+}
+.mobilmenu .sprachwahl-mobil a{
+  font-family: var(--sans); font-size:1rem; font-weight:600; letter-spacing:.05em;
+  color: rgba(243,241,230,.6); padding:0;
+}
+.mobilmenu .sprachwahl-mobil a.aktiv{ color: #cfc48a; }
+
+@media (min-width: 940px){
+  .hauptnav{ display:flex; }
+  .nav-schalter, .mobilmenu{ display:none !important; }
+}
+
+/* ── Fotos ──────────────────────────────────────────────────── */
+.foto{ width:100%; height:100%; object-fit:cover; }
+/* Rahmen mit versetzter Goldlinie dahinter */
+.foto-rand{ position:relative; }
+.foto-rand::after{
+  content:""; position:absolute; inset:0;
+  transform: translate(14px, 14px);
+  border: 1px solid var(--gold);
+  z-index:-1;
+  pointer-events:none;
+}
+
+/* ── Seitenkopf für Unterseiten ─────────────────────────────── */
+.seitenkopf{ padding-block: 4.5rem 3rem; }
+.seitenkopf .vorzeile{
+  font-family: var(--serif); font-style: italic;
+  font-size: 1.2rem; color: var(--gold);
+  display:block; margin-bottom: .75rem;
+}
+.seitenkopf p{ margin-top: 1.25rem; color: var(--tinte-sanft); max-width: 56ch; }
+@media (min-width: 900px){ .seitenkopf{ padding-block: 6rem 4rem; } }
+
+/* Rechtstexte (Impressum, Datenschutz) */
+.rechtstext{ max-width: 68ch; }
+.rechtstext h2{ font-size: clamp(1.35rem,2.4vw,1.8rem); margin-top: 2.75rem; }
+.rechtstext h2:first-child{ margin-top: 0; }
+.rechtstext p{ margin-top: 1rem; color: var(--tinte-sanft); }
+.rechtstext ul{ margin-top: 1rem; padding-left: 1.2rem; color: var(--tinte-sanft); }
+.rechtstext li{ margin-top: .35rem; }
+.rechtstext a{ color: var(--pinie); }
+.rechtstext .hinweis{
+  margin-top: 2.5rem; padding: 1.25rem 1.5rem;
+  background: var(--salbei-hell); border-radius: .75rem;
+  font-size: .9rem;
+}
+
+/* ── Startseite: Hero = WELLNESSPLACE + Massage-Illustration (Editorial) ─── */
+.held{
+  position:relative; overflow:hidden; color: var(--tinte);
+  background: linear-gradient(180deg, #f7f6f0 0%, #f3f3ea 100%);
+}
+/* Zwei riesige, sehr weiche organische Blobs – lebendig, aber dezent */
+.held::before{
+  content:""; position:absolute; inset:-16%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(34% 42% at 8% 34%, var(--salbei), transparent 70%),
+    radial-gradient(42% 50% at 90% 98%, #b7a06a, transparent 72%);
+  opacity:.13; filter: blur(90px);
+}
+/* Raue Papiertextur – nimmt dem Ganzen das Digitale */
+.held::after{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.09;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.held-inhalt{
+  position:relative; z-index:2;
+  max-width: 1120px; margin-inline:auto; text-align:center;
+  padding-block: 4.25rem 4.5rem;
+}
+@media (min-width: 760px){ .held-inhalt{ padding-block: 6.75rem 7rem; } }
+.held-titel{
+  position:relative; z-index:2;
+  font-family: var(--serif); font-weight:400; line-height:1;
+  text-transform:uppercase; letter-spacing:.1em;
+  color: var(--pinie);
+  font-size: clamp(2.4rem, 8vw, 6.6rem);
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,.09));
+}
+/* Gefüllt in der Hintergrundfarbe mit grünem Rand – der Schriftzug deckt die
+   Figur genau dort ab, wo er liegt, und verschmilzt sonst mit dem Beige-Grund */
+@supports ((-webkit-text-stroke: 1px black)){
+  .held-titel{ color: #f7f6f0; -webkit-text-stroke: 1.6px var(--pinie); }
+}
+/* Titel weiter nach unten gezogen: er liegt mittig über der Figur */
+.held-bild{
+  position:relative; z-index:1; display:block;
+  width:100%; max-width: 1040px; height:auto; margin: -4.6rem auto 0;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.06));
+}
+@media (min-width: 760px){ .held-bild{ margin-top: -9.5rem; } }
+.held-text{
+  position:relative; z-index:2;
+  margin: 1.6rem auto 0; font-family: var(--serif);
+  font-size: 1.5rem; letter-spacing: .01em; color: var(--tinte-sanft);
+}
+/* feine editoriale Haarlinie über der Zeile – bindet sie in den Hero ein */
+.held-text::before{
+  content:""; display:block; width: 3rem; height:1px;
+  margin: 0 auto 1rem; background: var(--pinie); opacity:.4;
+}
+.held-knoepfe{
+  position:relative; z-index:2;
+  margin-top: 1.75rem; display:flex; flex-wrap:wrap; gap:.9rem; justify-content:center;
+}
+
+/* nur für Screenreader / SEO sichtbar */
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* Google-Gesamtbewertung (Vertrauenshinweis) */
+.google-wertung{
+  display:inline-flex; align-items:center; gap:.55rem;
+  margin-top: 1.6rem; text-decoration:none;
+  font-size:.95rem; color: var(--tinte-sanft);
+}
+.google-wertung .sterne{ color: var(--gold); letter-spacing:.12em; font-size:1rem; }
+.google-wertung strong{ color: var(--tinte); font-weight:700; }
+.google-wertung:hover strong{ text-decoration:underline; }
+/* auf grünem Grund (z. B. Schluss-Aufruf) */
+.aufruf .google-wertung{ color: rgba(243,241,230,.82); }
+.aufruf .google-wertung strong{ color: var(--bone); }
+
+/* Sprachwechsel: Seite unsichtbar halten, bis die alte Scroll-Position
+   wiederhergestellt ist (die Klasse setzt ein Inline-Script im <head>,
+   main.js entfernt sie nach dem Positionieren). Kein sichtbares Springen. */
+html.sprach-warten{ scroll-behavior: auto; }
+html.sprach-warten body{ opacity: 0; }
+
+/* ── Abschnitts-Layout mit grossem Abstand ──────────────────── */
+.abschnitt{ padding-block: 4.5rem; }
+@media (min-width: 900px){ .abschnitt{ padding-block: 7rem; } }
+.abschnitt-kopf{ max-width: 42rem; margin-bottom: 3rem; }
+.abschnitt-kopf p{ margin-top: 1rem; color: var(--tinte-sanft); }
+
+/* ── Handy: ruhiger & kompakter (weniger „voll") ──────────────
+   Weniger Leerraum zwischen den Blöcken, etwas kleinere Beschreibungen,
+   und die Fotos auf den Unterseiten deutlich kleiner + zentriert. */
+@media (max-width: 759px){
+  .seitenkopf{ padding-block: 1.75rem 1.5rem; }
+  .abschnitt{ padding-block: 3rem; }
+  .abschnitt-kopf{ margin-bottom: 1.75rem; }
+  .menu-punkt{ padding-block: 1.1rem; }
+  .menu-punkt p{ font-size: .9rem; line-height: 1.5; margin-top: .3rem; }
+  .menu-kopf{ gap: .6rem; }
+  .preis-zeile{ padding-block: .7rem; font-size: .92rem; }
+  .split{ gap: 1.75rem; }
+  .split-bild{ max-width: 260px; margin-inline: auto; }
+}
+
+/* ── Behandlungs-Menü (Angebote) ────────────────────────────── */
+.menu{ display:grid; gap: 0 4.5rem; list-style:none; }
+.menu-punkt{ padding-block: 1.5rem; border-bottom: 1px solid var(--linie); }
+.menu-kopf{ display:flex; align-items:baseline; justify-content:space-between; gap:1rem; }
+
+.dauer{ font-size:.8rem; font-weight:600; letter-spacing:.04em; color: var(--gold); white-space:nowrap; }
+.menu-punkt p{ margin-top:.4rem; font-size:.93rem; color: var(--tinte-sanft); }
+@media (min-width: 900px){
+  .menu{ grid-template-columns: 1fr 1fr; }
+  .menu-punkt:nth-last-child(-n+2){ border-bottom:none; }
+}
+
+/* Tarif-Zeile: Dauer und Preis zusammen in einem Chip,
+   damit die Zeit nirgends doppelt erscheint */
+.tarif{ display:flex; flex-wrap:wrap; gap:.6rem; margin-top: 1rem; }
+.tarif span{
+  border: 1px solid var(--linie);
+  padding: .42rem .85rem;
+  font-size:.85rem; font-weight:600;
+  color: var(--tinte);
+  white-space: nowrap;
+}
+.tarif span strong{ color: var(--gold); font-weight:600; }
+
+/* Teaser-Variante auf der Startseite: einspaltig neben Titel */
+.teaser-gitter{ display:grid; gap: 3rem; }
+.teaser-gitter .menu{ grid-template-columns: 1fr; }
+.teaser-gitter .menu-punkt:first-child{ padding-top: 0; }
+.teaser-gitter .menu-punkt:nth-last-child(-n+2){ border-bottom: 1px solid var(--linie); }
+.teaser-gitter .menu-punkt:last-child{ border-bottom:none; }
+.teaser-seite .knopf{ margin-top: 2rem; }
+@media (min-width: 900px){
+  .teaser-gitter{ grid-template-columns: 5fr 7fr; gap: 5rem; align-items:start; }
+  .teaser-seite{ position: sticky; top: 7rem; }
+}
+
+/* Ablauf-Gitter (Ernährungsberatung): Titel links, Schritte rechts */
+.ablauf-gitter{ display:grid; gap: 3rem; }
+@media (min-width: 900px){
+  .ablauf-gitter{ grid-template-columns: 4fr 7fr; gap: 5rem; align-items:start; }
+  .ablauf-gitter > div:first-child{ position: sticky; top: 7rem; }
+}
+
+/* ── Preise / dunkelgrüner Block mit Preisliste ─────────────── */
+.preise{ background: var(--pinie); color: var(--bone); }
+.preise h2{ color: var(--bone); }
+.preise .abschnitt-kopf p{ color: rgba(243,241,230,.72); }
+.preis-spalten{ display:grid; gap: 0 4.5rem; list-style:none; }
+.preis-zeile{ display:flex; align-items:baseline; gap:.6rem; padding-block:.85rem; font-size:.97rem; }
+.preis-zeile .pz-name{ min-width:0; }
+.preis-zeile .punkte{ flex:1; border-bottom: 1px dotted rgba(243,241,230,.35); transform: translateY(-4px); }
+/* Dauer in einer eigenen, überall gleich ausgerichteten Spalte */
+.preis-zeile .pz-dauer{
+  flex:none; width: 4.4rem; text-align:right;
+  color: rgba(243,241,230,.6); font-size:.82rem; font-weight:600;
+  letter-spacing:.02em; white-space:nowrap;
+}
+.preis-zeile .betrag{
+  flex:none; min-width: 5rem; text-align:right;
+  font-family: var(--serif); font-size:1.15rem; font-weight:600; white-space:nowrap;
+}
+/* ── Preise: umrahmte Tarif-Kacheln, Ausnahme-Box, Info-Boxen ───
+   Warmer Gold-Akzent (--akzent) nur auf dieser Sektion. */
+.preis-kopf{ text-align:center; max-width: 52rem; margin-inline:auto; }
+.preis-kopf h2{ margin-bottom: 0; }
+/* kleiner Unterstrich unter „Preise" */
+.preis-kopf h2::after{
+  content:""; display:block; width: 3rem; height:1px;
+  background: var(--akzent); opacity:.85; margin: 1.15rem auto 0;
+}
+.preis-kopf p{ color: rgba(243,241,230,.8); margin: 1.25rem auto 0; text-align:center; max-width: 54ch; }
+
+/* Fünf umrahmte Kacheln mit kleiner Dauer, feinem Strich, grosser Zahl */
+.preis-tarife{ margin-top: 2.75rem; display:grid; gap: 1rem; grid-template-columns: repeat(2,1fr); }
+@media (min-width: 760px){ .preis-tarife{ grid-template-columns: repeat(5,1fr); gap: 1.1rem; } }
+@media (max-width: 759px){ .preis-tarife > .pt-tile:last-child{ grid-column: 1 / -1; } }
+.pt-tile{
+  border: 1px solid rgba(243,241,230,.22);
+  padding: 1.55rem 1rem 1.5rem;
+  display:flex; flex-direction:column; align-items:center; gap:.7rem; text-align:center;
+  transition: transform .4s var(--kurve), border-color .4s var(--kurve), background-color .4s var(--kurve), box-shadow .4s var(--kurve);
+}
+/* beim Darüberfahren heben sich die Kacheln sanft an und bekommen Gold-Rand */
+@media (hover:hover) and (pointer:fine){
+  .pt-tile:hover{
+    transform: translateY(-6px);
+    border-color: var(--akzent);
+    background: rgba(243,241,230,.05);
+    box-shadow: 0 22px 40px -28px rgba(0,0,0,.65);
+  }
+}
+.pt-dauer{ font-family: var(--sans); font-size:.76rem; letter-spacing:.13em; text-transform:uppercase; color: var(--akzent); }
+.pt-strich{ width: 1.6rem; height:1px; background: var(--akzent); opacity:.7; }
+.pt-preis{ display:inline-flex; align-items:baseline; gap:.35rem; font-family: var(--serif); color: var(--bone); }
+.pt-chf{ font-size: 1.05rem; letter-spacing:.02em; color: rgba(243,241,230,.75); }
+.pt-num{ font-size: 2.6rem; line-height:1; }
+
+/* Ausnahme als eigene, umrahmte Box mit Stein-Symbol – Inhalt zentriert */
+.preis-ausnahme{
+  margin: 1.1rem auto 0; max-width: 40rem;
+  display:flex; align-items:center; justify-content:center; gap: 1.15rem;
+  border: 1px solid rgba(243,241,230,.22); padding: 1.15rem 1.4rem;
+}
+.pa-icon{
+  flex:none; width: 3rem; height: 3rem; display:grid; place-items:center;
+  border: 1px solid var(--akzent); border-radius:50%; color: var(--akzent);
+}
+.pa-icon svg{ width: 1.5rem; height: 1.5rem; }
+.pa-text{ text-align:center; }
+.pa-label{ display:block; font-family: var(--sans); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color: var(--akzent); margin-bottom:.25rem; }
+.pa-line{ font-family: var(--serif); font-size: 1.2rem; color: var(--bone); }
+
+.preis-kombi{ margin: 2.25rem auto 0; text-align:center; max-width: 60ch; color: rgba(243,241,230,.8); }
+
+/* Info-Boxen (Zahlung / Krankenkasse / Gutscheine) umrahmt */
+.preis-hinweis{
+  margin-top: 2.5rem; padding-top: 2.5rem;
+  border-top: 1px solid rgba(243,241,230,.18);
+  display:grid; gap: 1rem;
+}
+@media (min-width: 760px){ .preis-hinweis{ grid-template-columns: repeat(3,1fr); gap: 1.25rem; } }
+.preis-hinweis > div{
+  border: 1px solid rgba(243,241,230,.2); padding: 1.5rem 1.5rem 1.6rem;
+  transition: transform .4s var(--kurve), border-color .4s var(--kurve), background-color .4s var(--kurve);
+}
+@media (hover:hover) and (pointer:fine){
+  .preis-hinweis > div:hover{ transform: translateY(-4px); border-color: var(--akzent); background: rgba(243,241,230,.04); }
+}
+.preis-hinweis h3{ font-family: var(--serif); font-weight:400; font-size: 1.2rem; color: var(--bone); margin-bottom:.55rem; }
+.preis-hinweis p{ font-size:.92rem; color: rgba(243,241,230,.75); }
+
+/* sanfte Bewegungen abschalten, wenn der Nutzer das wünscht */
+@media (prefers-reduced-motion: reduce){
+  .pt-tile, .preis-hinweis > div{ transition: border-color .3s ease, background-color .3s ease; }
+  .pt-tile:hover, .preis-hinweis > div:hover{ transform: none; box-shadow:none; }
+}
+
+/* Botanische Deko im Preise-Band + warmer Gold-Akzent nur hier */
+.preise{ position:relative; overflow:hidden; --akzent: #cdbf92; }
+/* ein einzelnes, grosses Blatt, das sich diagonal über die ganze Sektion legt */
+.preise .deko-preise{
+  position:absolute; z-index:0; pointer-events:none;
+  top:50%; left:50%;
+  width: min(120%, 1100px);
+  max-width:none;
+  opacity:.07;
+  transform: translate(-50%,-50%) rotate(-18deg);
+}
+.preise .rahmen{ position:relative; z-index:1; }
+
+/* ── Rezensionen (Google-Bewertungen) ───────────────────────── */
+.wertung{
+  display:flex; flex-wrap:wrap; align-items:baseline;
+  gap: .4rem 1.25rem;
+  margin-top: 1.5rem;
+}
+.wertung .note{
+  font-family: var(--serif);
+  font-size: 3rem; font-weight: 400; line-height:1;
+}
+.wertung .sterne{
+  color: var(--gold);
+  font-size: 1.15rem;
+  letter-spacing: .18em;
+}
+.wertung small{ font-size:.9rem; color: var(--tinte-sanft); }
+.wertung small a{ color: var(--pinie); }
+
+.zitate{
+  display:grid; gap: 2.25rem;
+  margin-top: 3rem;
+  list-style:none;
+}
+.zitate li{ display:flex; }
+.zitate blockquote{
+  border-top: 1px solid var(--salbei);
+  padding-top: 1.4rem;
+  display:flex; flex-direction:column;
+  width:100%;
+}
+.zitate blockquote p{
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  line-height: 1.5;
+}
+/* margin-top:auto drückt alle Namenszeilen auf die gleiche Höhe */
+.zitate footer{
+  margin-top: auto;
+  padding-top: 1.25rem;
+  font-size: .85rem; font-weight:600;
+  color: var(--tinte-sanft);
+}
+@media (min-width: 720px){
+  .zitate{ grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+}
+
+/* ── Bild-Text-Splits ───────────────────────────────────────── */
+.split{ display:grid; gap: 3rem; }
+.split-bild img{ aspect-ratio: 3/4; object-fit:cover; width:100%; height:auto; }
+.split-bild img.quer{ aspect-ratio: 3/2; } /* für Querformat-Bilder */
+.split-text h2{ margin-bottom: 1.25rem; }
+.split-text p + p{ margin-top: 1rem; }
+.split-text .knopf{ margin-top: 2rem; }
+@media (min-width: 900px){
+  .split{ grid-template-columns: 5fr 7fr; gap: 5.5rem; align-items:center; }
+  .split.split-rechts{ grid-template-columns: 7fr 5fr; }
+  .split.split-rechts .split-bild{ order: 2; }
+}
+
+/* ── Werdegang ──────────────────────────────────────────────── */
+.werdegang{
+  margin-top: 2.5rem; list-style:none;
+  border-left: 1px solid var(--gold);
+  padding-left: 1.6rem;
+  display:grid; gap: 1.2rem;
+}
+.werdegang .jahr{ font-family: var(--serif); font-size:1.15rem; font-weight:400; display:block; }
+.werdegang li span:last-child{ font-size:.93rem; color: var(--tinte-sanft); }
+
+/* ── Panel (Firmen-Teaser, Hinweise) ────────────────────────── */
+.panel{
+  background: var(--salbei-hell);
+  border: 1px solid var(--linie);
+  padding: 2.5rem 1.5rem;
+}
+.panel .vorzeile{
+  display:block; font-size:.72rem; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.panel h2{ max-width: 20ch; }
+.panel p{ margin-top: 1.1rem; color: var(--tinte-sanft); }
+.panel .knopf{ margin-top: 1.9rem; }
+@media (min-width: 900px){ .panel{ padding: 3.5rem 4rem; } }
+
+/* Zwei Panels nebeneinander (z. B. Firmen + Ernährungsberatung) */
+.panel-duo{ display:grid; gap: 1.5rem; }
+.panel-duo .panel h2{ font-size: clamp(1.5rem, 2.4vw, 2rem); }
+@media (min-width: 900px){
+  .panel-duo{ grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .panel-duo .panel{ padding: 2.75rem 3rem; display:flex; flex-direction:column; align-items:flex-start; }
+  .panel-duo .panel .knopf{ margin-top:auto; }
+  .panel-duo .panel p{ margin-bottom: 1.9rem; }
+}
+
+/* Grosser Preis im Firmen-Panel */
+.preis-gross{
+  margin-top: 1.9rem;
+  font-family: var(--serif); font-size: 1.6rem; font-weight: 400;
+  color: var(--pinie);
+}
+.preis-gross small{
+  display:block; font-family: var(--sans);
+  font-size:.85rem; font-weight:400; color: var(--tinte-sanft);
+  margin-top:.3rem;
+}
+
+/* Drei ruhige Spalten (Firmen-Nutzen) */
+.drei-spalten{ display:grid; gap: 2rem; margin-top: 3rem; }
+.drei-spalten > div{ border-top: 1px solid var(--salbei); padding-top: 1.25rem; }
+.drei-spalten h3{ font-weight:600; margin-bottom:.5rem; }
+.drei-spalten p{ font-size:.93rem; color: var(--tinte-sanft); }
+@media (min-width: 720px){ .drei-spalten{ grid-template-columns: repeat(3,1fr); gap: 3rem; } }
+
+/* ── Kontakt ────────────────────────────────────────────────── */
+.kontakt-knoepfe{ display:flex; flex-direction:column; gap:.9rem; margin-top: 2.5rem; }
+.kontakt-knoepfe .knopf{ width:100%; max-width: 21rem; }
+.kontakt-details{
+  margin-top: 3.5rem; padding-top: 2.5rem;
+  border-top: 1px solid var(--linie);
+  display:grid; gap: 1.9rem;
+}
+.kontakt-details strong{
+  display:block; font-family: var(--serif);
+  font-size:1.25rem; font-weight:400; margin-bottom:.3rem;
+}
+.kontakt-details p{ font-size:.95rem; color: var(--tinte-sanft); }
+.kontakt-details a{ color: var(--pinie); }
+/* Öffnungszeiten als schlichte Definitionsliste */
+.oeffnungszeiten{ display:grid; grid-template-columns: auto 1fr; gap:.2rem 1rem; font-size:.95rem; color: var(--tinte-sanft); }
+.oeffnungszeiten dt{ font-weight:600; color: var(--tinte); }
+.oeffnungszeiten dd{ margin:0; }
+.zeiten-hinweis{ margin-top:.6rem; }
+@media (min-width: 720px){
+  .kontakt-knoepfe{ flex-direction:row; }
+  .kontakt-knoepfe .knopf{ width:auto; }
+  .kontakt-details{ grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+}
+
+/* ── Grosser Schluss-Aufruf (dunkelgrün) ────────────────────── */
+.aufruf{ background: var(--pinie); color: var(--bone); text-align:center; }
+.aufruf-innen{ padding-block: 5rem; }
+.aufruf h2{ color: var(--bone); font-size: clamp(2.3rem, 5vw, 3.6rem); max-width: 18ch; margin-inline:auto; }
+.aufruf p{ margin: 1.25rem auto 0; color: rgba(243,241,230,.75); max-width: 46ch; }
+.aufruf .kontakt-knoepfe{ align-items:center; justify-content:center; }
+@media (min-width: 900px){ .aufruf-innen{ padding-block: 7rem; } }
+
+/* ── Fusszeile ──────────────────────────────────────────────── */
+.fuss{
+  background: var(--pinie-tief);
+  color: rgba(243,241,230,.65);
+  font-size:.9rem;
+}
+.fuss-gitter{
+  display:grid; gap: 2.25rem;
+  padding-block: 3.5rem 2.5rem;
+}
+.fuss-marke img{ width: 2.6rem; height:auto; opacity:.95; margin-bottom:.75rem; }
+.fuss-marke strong{ font-family: var(--serif); font-size:1.2rem; font-weight:400; color: var(--bone); display:block; }
+.fuss-marke small{ font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; }
+.fuss-marke p{ margin-top:.85rem; max-width: 30ch; }
+.fuss h4{
+  font-family: var(--sans); font-size:.75rem; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase;
+  color: rgba(243,241,230,.5); margin-bottom:1rem;
+}
+.fuss ul{ list-style:none; display:grid; gap:.55rem; }
+.fuss li.mit-icon{ display:flex; gap:.6rem; align-items:flex-start; }
+.fuss li.mit-icon svg{ width:1.05rem; height:1.05rem; flex:none; margin-top:.15rem; opacity:.7; }
+.fuss a{ color: rgba(243,241,230,.85); text-decoration:none; }
+.fuss a:hover{ color:#ffffff; }
+/* Social-Icons */
+.fuss-social{ display:flex; gap:.7rem; margin-top:1.25rem; }
+.fuss-social a{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:2.4rem; height:2.4rem; border-radius:999px;
+  border:1px solid var(--linie-dunkel);
+}
+.fuss-social svg{ width:1.15rem; height:1.15rem; }
+.fuss-unten{
+  border-top: 1px solid var(--linie-dunkel);
+  padding-block: 1.5rem;
+  display:flex; flex-direction:column; gap:.75rem;
+  align-items:center; text-align:center;
+  font-size:.82rem;
+}
+.fuss-unten nav{ display:flex; gap:1.5rem; }
+@media (min-width: 640px){
+  .fuss-gitter{ grid-template-columns: 1fr 1fr; gap: 2.5rem 3rem; }
+}
+@media (min-width: 960px){
+  .fuss-gitter{ grid-template-columns: 1.6fr 1fr 1.3fr 1.1fr; gap: 3rem; }
+  .fuss-unten{ flex-direction:row; justify-content:space-between; }
+}
+
+/* ── Sanftes Einblenden beim Scrollen ───────────────────────── */
+@media (prefers-reduced-motion: no-preference){
+  .einblenden{
+    opacity:0; transform: translateY(20px);
+    transition: opacity 700ms var(--kurve), transform 700ms var(--kurve);
+  }
+  .einblenden.sichtbar{ opacity:1; transform:none; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   STARTSEITE · REFERENZ-DESIGN
+   ════════════════════════════════════════════════════════════ */
+
+/* Kleine Eyebrow-Zeile über Titeln */
+.eyebrow{
+  display:block; font-size:.72rem; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase;
+  color: var(--pinie);
+}
+
+/* Runde Icon-Badges (Leistungen, Features) */
+.icon-badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:3.1rem; height:3.1rem; border-radius:999px;
+  background: var(--salbei-hell); color: var(--pinie);
+  flex:none;
+}
+.icon-badge svg{ width:1.5rem; height:1.5rem; }
+
+/* Feature-Reihe im Hero (Persönlich / Körper & Geist / Parkplätze) */
+.held-features{
+  margin-top: 2.75rem;
+  display:flex; flex-wrap:wrap; gap: 1.75rem 2.5rem;
+}
+.held-feature{ display:flex; align-items:center; gap:.75rem; }
+.held-feature svg{ width:1.6rem; height:1.6rem; color: var(--pinie); flex:none; }
+.held-feature span{ font-size:.9rem; line-height:1.35; color: var(--tinte-sanft); }
+.held-feature b{ display:block; color: var(--tinte); font-weight:600; }
+
+/* Wellen-Trenner zwischen Abschnitten (fill über CSS, nicht als SVG-Attribut) */
+.wave-top, .wave-bottom{
+  position:absolute; left:0; width:100%; height:55px;
+  z-index:1; pointer-events:none; line-height:0;
+}
+.wave-top{ top:-1px; }
+.wave-bottom{ bottom:-1px; }
+.wave-top svg, .wave-bottom svg{ display:block; width:100%; height:100%; }
+.wave-top svg path, .wave-bottom svg path{ fill: var(--papier); }
+@media (min-width:900px){ .wave-top, .wave-bottom{ height:90px; } }
+
+/* Grosse abgerundete Card ("Was dir guttut") */
+.karten-band{ padding-block: 1rem 4rem; position:relative; }
+@media (min-width:900px){ .karten-band{ padding-block: 2rem 6rem; } }
+.karte{
+  position:relative;
+  background-color: var(--karte);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  border-radius: 2rem;
+  box-shadow: 0 30px 60px -40px rgba(60,74,54,.5);
+  padding: 2.5rem 1.75rem;
+  display:grid; gap: 2.5rem;
+  overflow:hidden;
+}
+.karte-text{ min-width:0; }
+.karte .deko-blatt{ bottom:-30px; left:-40px; width:180px; opacity:.5; transform: rotate(190deg); }
+@media (min-width:900px){
+  .karte{ grid-template-columns: 5fr 7fr; gap: 4rem; padding: 3.5rem; align-items:center; }
+}
+.karte-text .knopf{ margin-top: 2rem; }
+/* Button unter den drei Angeboten – macht klar, dass es noch mehr gibt */
+/* Button direkt unter die drei Angebote (rechte Spalte), damit klar wird,
+   dass es noch mehr gibt */
+.karte-cta{ display:flex; justify-content:center; margin-top: 1.75rem; }
+@media (min-width:900px){ .karte-cta{ grid-column: 2; justify-content:center; margin-top: 1.75rem; } }
+
+/* Leistungs-Liste mit Icon-Badges */
+.leistungen{ list-style:none; display:grid; min-width:0; }
+.leistung{
+  display:flex; align-items:flex-start; gap: 1.1rem;
+  padding-block: 1.4rem;
+  border-bottom: 1px solid var(--linie);
+}
+.leistung:last-child{ border-bottom:none; }
+.leistung-text{ flex:1; min-width:0; }
+/* Titel darf umbrechen, die Dauer bleibt immer oben rechts (auch bei langen
+   Titeln wie „Rücken- & Nackenmassage") – gleiche Position wie im Englischen. */
+.leistung-kopf{ display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:baseline; gap:.25rem 1rem; }
+.leistung-kopf h3{ font-size:1.2rem; flex:1; min-width:0; }
+.leistung-kopf .dauer{ font-size:.8rem; font-weight:600; color: var(--gold); white-space:nowrap; flex:none; }
+.leistung-text p{ margin-top:.25rem; font-size:.9rem; color: var(--tinte-sanft); }
+
+/* ── Grüner "Über mich"-Block mit Bild ──────────────────────── */
+.ueber-block{ position:relative; background: var(--pinie); color: var(--bone); overflow:clip; }
+.ueber-block .deko-blatt{ top:40px; left:-30px; width:150px; opacity:.4; }
+.ueber-inhalt{ display:grid; gap:0; position:relative; z-index:1; }
+.ueber-block .text{ padding-block: 3.5rem; }
+/* Auf dem Handy alles zentriert (Titel, Untertitel, Text, Button) über dem Bild */
+@media (max-width:899px){
+  .ueber-block .text{ text-align:center; }
+  .ueber-block .text p{ margin-inline:auto; }
+}
+.ueber-block .eyebrow{ color: rgba(243,241,230,.65); }
+.ueber-block h2{ color: var(--bone); margin-top:.75rem; }
+.ueber-block p{ margin-top:1.25rem; color: rgba(243,241,230,.8); max-width: 42ch; }
+.ueber-block .knopf{ margin-top: 2rem; }
+.ueber-block .bild{ position:relative; min-height: 300px;
+  display:grid; place-items:center; padding: 1.5rem 1.5rem 4.25rem; }
+/* Gerahmtes Portrait mit versetzter Goldlinie und Blatt-Zweig als Schmuck */
+.foto-rahmen{ position:relative; width: min(88%, 330px); }
+.foto-rahmen img{
+  width:100%; aspect-ratio: 3/4; height:auto; object-fit:cover;
+  object-position: 50% 26%;   /* Fokus aufs Gesicht */
+  border-radius: 3px; display:block;
+  /* feine helle Kante am Foto + weiche Tiefe */
+  box-shadow:
+    0 0 0 1px rgba(244,242,232,.35),
+    0 26px 44px -26px rgba(0,0,0,.7);
+}
+.foto-rahmen::after{           /* klar sichtbarer Rahmen als Passepartout */
+  content:""; position:absolute; inset:-15px;
+  border: 1.5px solid #cdbf92;   /* helles Champagner-Gold, sichtbar auf Grün */
+  border-radius: 6px;
+  z-index:1; pointer-events:none;
+}
+.foto-rahmen::before{          /* Pflanzenschmuck an der oberen Ecke */
+  content:""; position:absolute; z-index:2;
+  width:120px; height:120px; top:-40px; left:-36px;
+  background: url('img/blatt-zweig.svg') no-repeat center/contain;
+  opacity:.95; transform: scaleX(-1) rotate(10deg); pointer-events:none;
+}
+/* Platzhalter, bis ein echtes Portraitfoto eingesetzt wird */
+.foto-platzhalter{
+  width:100%; height:100%; min-height:320px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.75rem;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(243,241,230,.16), transparent 60%),
+    var(--pinie-tief);
+  border: 1px dashed rgba(243,241,230,.35);
+  color: rgba(243,241,230,.75);
+}
+.foto-platzhalter svg{ width:2.75rem; height:2.75rem; opacity:.8; }
+.foto-platzhalter span{ font-family: var(--serif); font-size:1.05rem; letter-spacing:.02em; }
+@media (min-width:900px){
+  .ueber-inhalt{ grid-template-columns: 1fr 1fr; align-items:stretch; }
+  .ueber-block .text{ padding: 5.5rem 4rem 5.5rem 0; align-self:center; }
+  .ueber-block .bild{ min-height:100%; padding: 4rem 2.5rem 6.5rem; }
+  .foto-rahmen{ width: min(80%, 350px); }
+  .foto-rahmen::before{ width:150px; height:150px; top:-50px; left:-46px; }
+  /* grosses Blatt unten rechts in der grünen Fläche */
+  .ueber-block::after{
+    content:""; position:absolute; z-index:0; pointer-events:none;
+    right:-30px; bottom:24px; width:260px; height:260px;
+    background: url('img/blatt-zweig.svg') no-repeat center/contain;
+    opacity:.5; transform: scaleY(-1) rotate(-6deg);
+  }
+}
+
+/* ── Testimonials ───────────────────────────────────────────── */
+.stimmen{ position:relative; text-align:center; overflow:hidden; }
+.stimmen .deko-blatt{ top:80px; right:-40px; width:230px; opacity:.6; transform: scaleX(-1); }
+.stimmen-kopf .eyebrow{ margin-bottom:.75rem; }
+.stimmen-kopf h2{ font-size: clamp(1.9rem,4vw,2.9rem); }
+.stimmen-kopf .strich{
+  width:64px; height:1px; background: var(--salbei);
+  margin: 1.25rem auto 0; position:relative;
+}
+.stimmen-gitter{
+  margin-top: 3rem;
+  display:grid; gap: 1.5rem;
+  text-align:left;
+}
+.stimme{
+  background-color: var(--karte);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  border: 1px solid var(--linie);
+  border-radius: 1.25rem;
+  padding: 2rem 1.75rem;
+  display:flex; flex-direction:column;
+  transition: transform .35s var(--kurve), box-shadow .35s var(--kurve), border-color .35s var(--kurve);
+}
+/* beim Darüberfahren heben sich die Rezensionen sanft an
+   (höhere Spezifität als .einblenden.sichtbar, damit die Einblend-Regel
+   den Hover-Transform nicht überschreibt) */
+@media (hover:hover) and (pointer:fine){
+  .stimmen-gitter .stimme:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 22px 40px -28px rgba(60,74,54,.55);
+    border-color: var(--salbei);
+  }
+}
+.stimme .anfz{ font-family: var(--serif); font-size:2.5rem; line-height:.6; color: var(--salbei); }
+.stimme p{ margin-top:1rem; color: var(--tinte); }
+.stimme .wer{ margin-top:1.5rem; font-weight:600; font-size:.9rem; }
+.stimme .sterne{ margin-top:.5rem; color: var(--gold); letter-spacing:.15em; font-size:.9rem; }
+@media (min-width:900px){
+  .stimmen-gitter{ grid-template-columns: repeat(3,1fr); gap: 1.75rem; }
+}
+
+/* ── CTA-Band mit Kerzenbild ────────────────────────────────── */
+.cta-band{ padding-block: 1rem 4rem; }
+@media (min-width:900px){ .cta-band{ padding-block: 2rem 6rem; } }
+.cta-innen{
+  background: var(--pinie); color: var(--bone);
+  border-radius: 2rem; overflow:hidden;
+  display:grid; gap:0;
+}
+.cta-bild{ min-height: 200px; }
+.cta-bild img{ width:100%; height:100%; object-fit:cover; aspect-ratio: 16/9; }
+.cta-text{ padding: 2.75rem 1.75rem; display:flex; flex-direction:column; align-items:flex-start; gap:1rem; }
+.cta-text .kreis{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:3.25rem; height:3.25rem; border-radius:999px;
+  border:1px solid rgba(243,241,230,.35); color: var(--bone);
+}
+.cta-text .kreis svg{ width:1.5rem; height:1.5rem; }
+.cta-text h2{ color: var(--bone); font-size: clamp(1.8rem,3vw,2.4rem); }
+.cta-text p{ color: rgba(243,241,230,.8); max-width: 40ch; }
+.cta-text .knopf{ margin-top:.5rem; }
+@media (min-width:900px){
+  .cta-innen{ grid-template-columns: 1fr 1.2fr; align-items:center; }
+  .cta-bild{ height:100%; }
+  .cta-bild img{ aspect-ratio:auto; }
+  .cta-text{ padding: 3.5rem 4rem; }
+}
